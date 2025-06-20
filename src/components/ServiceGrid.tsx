@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { ServiceCard } from './ServiceCard';
 
@@ -46,13 +47,14 @@ export const ServiceGrid: React.FC<ServiceGridProps> = ({
             rowIndex > 0 ? 'mt-[70px] max-md:mt-10' : ''
           }`}
         >
-          {row.map((service) => (
+          {row.map((service, serviceIndex) => (
             <ServiceCard
               key={service.id}
               title={service.title}
               icon={service.icon}
               href={service.href}
               onClick={service.onClick || (() => handleServiceClick(service.id))}
+              showPlusButton={rowIndex === 0 && serviceIndex === 0}
             />
           ))}
         </div>

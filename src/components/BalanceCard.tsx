@@ -1,6 +1,5 @@
 
 import React, { useState } from 'react';
-import { Plus } from 'lucide-react';
 
 interface BalanceCardProps {
   currentBalance?: string;
@@ -48,14 +47,6 @@ export const BalanceCard: React.FC<BalanceCardProps> = ({
           {formatBalance(secondaryBalance)}
         </div>
       </div>
-      
-      {/* Add Plus Button */}
-      <button 
-        className="absolute -top-2 -right-2 bg-white text-[rgba(51,102,153,1)] w-8 h-8 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-110"
-        aria-label="Add funds"
-      >
-        <Plus size={16} className="stroke-2" />
-      </button>
     </article>
   );
 };

@@ -1,4 +1,6 @@
+
 import React from 'react';
+import { Plus } from 'lucide-react';
 
 interface ServiceCardProps {
   title: string;
@@ -6,6 +8,7 @@ interface ServiceCardProps {
   href?: string;
   onClick?: () => void;
   className?: string;
+  showPlusButton?: boolean;
 }
 
 export const ServiceCard: React.FC<ServiceCardProps> = ({
@@ -13,7 +16,8 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
   icon,
   href,
   onClick,
-  className = ""
+  className = "",
+  showPlusButton = false
 }) => {
   const cardContent = (
     <>
@@ -28,6 +32,15 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
           {title}
         </div>
       </div>
+      
+      {showPlusButton && (
+        <button 
+          className="absolute -top-2 -right-2 bg-white text-[rgba(51,102,153,1)] w-8 h-8 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-110"
+          aria-label="Add service"
+        >
+          <Plus size={16} className="stroke-2" />
+        </button>
+      )}
     </>
   );
 
