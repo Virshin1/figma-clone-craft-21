@@ -1,4 +1,6 @@
+
 import React, { useState } from 'react';
+import { Plus } from 'lucide-react';
 
 interface BalanceCardProps {
   currentBalance?: string;
@@ -22,7 +24,7 @@ export const BalanceCard: React.FC<BalanceCardProps> = ({
   };
 
   return (
-    <article className="bg-[rgba(51,102,153,1)] w-[427px] max-w-full text-[22px] text-white font-medium rounded-[47px]">
+    <article className="bg-[rgba(51,102,153,1)] w-[427px] max-w-full text-[22px] text-white font-medium rounded-[47px] relative">
       <div className="flex flex-col px-[43px] py-[27px] rounded-[47px] max-md:max-w-full max-md:px-5">
         <div className="flex items-center justify-between">
           <h2 className="text-center ml-2.5">
@@ -46,6 +48,14 @@ export const BalanceCard: React.FC<BalanceCardProps> = ({
           {formatBalance(secondaryBalance)}
         </div>
       </div>
+      
+      {/* Add Plus Button */}
+      <button 
+        className="absolute -top-2 -right-2 bg-white text-[rgba(51,102,153,1)] w-8 h-8 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-110"
+        aria-label="Add funds"
+      >
+        <Plus size={16} className="stroke-2" />
+      </button>
     </article>
   );
 };

@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Header } from '@/components/Header';
 import { TickerBanner } from '@/components/TickerBanner';
@@ -6,9 +7,21 @@ import { ChartCard } from '@/components/ChartCard';
 import { ServiceGrid } from '@/components/ServiceGrid';
 import { TransactionList } from '@/components/TransactionList';
 import { AdditionalServices } from '@/components/AdditionalServices';
-import { ChartSection } from '@/components/ChartSection';
+import { LineChartComponent } from '@/components/LineChart';
 
 const Index: React.FC = () => {
+  const chartData = [
+    { month: 'Jan', line1: 20, line2: 10, line3: 30, line4: 25 },
+    { month: 'Feb', line1: 22, line2: 15, line3: 25, line4: 20 },
+    { month: 'Mar', line1: 32, line2: 18, line3: 20, line4: 15 },
+    { month: 'Apr', line1: 35, line2: 30, line3: 18, line4: 8 },
+    { month: 'May', line1: 28, line2: 32, line3: 15, line4: 25 },
+    { month: 'Jun', line1: 30, line2: 35, line3: 18, line4: 15 },
+    { month: 'Jul', line1: 25, line2: 28, line3: 20, line4: 12 },
+    { month: 'Aug', line1: 18, line2: 15, line3: 25, line4: 8 },
+    { month: 'Sep', line1: 15, line2: 2, line3: 15, line4: 5 },
+  ];
+
   return (
     <div className="flex flex-col items-center py-[19px]">
       <Header />
@@ -32,10 +45,10 @@ const Index: React.FC = () => {
       <section className="w-full max-w-[1330px] mt-[78px] max-md:max-w-full max-md:mt-10">
         <div className="gap-5 flex max-md:flex-col max-md:items-stretch">
           <div className="w-6/12 max-md:w-full max-md:ml-0">
-            <ChartSection chartImage="https://cdn.builder.io/api/v1/image/assets/a2e53047b25843fd94cfdce41548669c/2c04af1f-e3e0-4e3f-8cfb-27767178208e?placeholderIfAbsent=true" />
+            <LineChartComponent title="AMOUNT RECEIVED" data={chartData} />
           </div>
           <div className="w-6/12 ml-5 max-md:w-full max-md:ml-0">
-            <ChartSection chartImage="https://cdn.builder.io/api/v1/image/assets/a2e53047b25843fd94cfdce41548669c/4f5c91a5-56c6-4bd2-bb7d-b7254dce19fa?placeholderIfAbsent=true" />
+            <LineChartComponent title="AMOUNT SPENT" data={chartData} />
           </div>
         </div>
       </section>
