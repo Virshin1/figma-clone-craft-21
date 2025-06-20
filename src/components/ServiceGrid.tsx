@@ -54,7 +54,7 @@ export const ServiceGrid: React.FC<ServiceGridProps> = ({
               icon={service.icon}
               href={service.href}
               onClick={service.onClick || (() => handleServiceClick(service.id))}
-              showPlusButton={rowIndex === 0 && serviceIndex === 0}
+              showPlusButton={true}
             />
           ))}
         </div>
