@@ -1,4 +1,5 @@
 import React from 'react';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
 interface HeaderProps {
   userName?: string;
@@ -99,15 +100,24 @@ export const Header: React.FC<HeaderProps> = ({
               </nav>
             </div>
             <div className="flex gap-[40px_42px]">
-              <button className="bg-[rgba(46,56,41,1)] flex min-h-10 items-center gap-2 overflow-hidden w-10 justify-center h-10 mt-[13px] px-2.5 rounded-[20px] hover:bg-[rgba(46,56,41,0.8)] transition-colors">
-                <div className="self-stretch w-full flex-1 shrink basis-[0%] my-auto">
-                  <img
-                    src="https://cdn.builder.io/api/v1/image/assets/a2e53047b25843fd94cfdce41548669c/86cafdf5d9d4c92cd6ceb5ad50abba6197c8d7e9?placeholderIfAbsent=true"
-                    alt="Notifications"
-                    className="aspect-[1] object-contain w-5 flex-1"
-                  />
-                </div>
-              </button>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <button className="bg-[rgba(46,56,41,1)] flex min-h-10 items-center gap-2 overflow-hidden w-10 justify-center h-10 mt-[13px] px-2.5 rounded-[20px] hover:bg-[rgba(46,56,41,0.8)] transition-colors">
+                    <div className="self-stretch w-full flex-1 shrink basis-[0%] my-auto">
+                      <img
+                        src="https://cdn.builder.io/api/v1/image/assets/a2e53047b25843fd94cfdce41548669c/86cafdf5d9d4c92cd6ceb5ad50abba6197c8d7e9?placeholderIfAbsent=true"
+                        alt="Notifications"
+                        className="aspect-[1] object-contain w-5 flex-1"
+                      />
+                    </div>
+                  </button>
+                </PopoverTrigger>
+                <PopoverContent className="w-64 p-4" align="end">
+                  <div className="text-center text-gray-600">
+                    <p className="text-sm">You have no notifications</p>
+                  </div>
+                </PopoverContent>
+              </Popover>
               <div className="flex gap-4">
                 <div className="flex flex-col items-stretch text-xs mt-4">
                   <div className="flex items-stretch gap-1">
