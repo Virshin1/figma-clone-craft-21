@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 
 interface HeaderProps {
   userName?: string;
@@ -10,19 +10,13 @@ export const Header: React.FC<HeaderProps> = ({
   userName = "Abhinav Mishra", 
   userId = "EPWR000019 (hpay)" 
 }) => {
-  const [isNavOpen, setIsNavOpen] = useState(false);
-
-  const toggleNav = () => {
-    setIsNavOpen(!isNavOpen);
-  };
-
   return (
     <header className="header">
-      <div className={`header-container ${isNavOpen ? 'nav-open' : ''}`}>
+      <div className="header-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <div className="logo-container">
           <img className="logo" src="/LOGO.jpg" alt="HPay Logo" />
         </div>
-        <nav className="main-nav">
+        <nav className="main-nav" style={{ flex: 1 }}>
           <ul className="nav-list" id="main-nav-list">
             <li className="nav-item has-dropdown">
                 <a href="#" className="nav-link">
@@ -94,30 +88,25 @@ export const Header: React.FC<HeaderProps> = ({
           </ul>
         </nav>
         <div className="navbar-balances">
-          <div className="balance-block">
+          <span className="balance-block">
             <svg className="balance-icon" width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="7" width="18" height="10" rx="3" fill="#39c3e8"/><rect x="5" y="9" width="14" height="6" rx="2" fill="#b2ebf2"/><rect x="8" y="12" width="3" height="2" rx="1" fill="#582a80"/></svg>
             <span className="balance-label">Cr Bal:</span>
             <span className="balance-value" id="current-balance">₹0.00</span>
-          </div>
-          <div className="balance-block">
+          </span>
+          <span className="balance-block">
             <svg className="balance-icon" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 17l6-6 4 4 8-8" stroke="#582a80" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/><circle cx="9" cy="11" r="2" fill="#39c3e8"/></svg>
             <span className="balance-label">Tr Bal:</span>
             <span className="balance-value" id="trade-balance">₹0.00</span>
-          </div>
+          </span>
         </div>
         <div className="header-user-group">
           <span className="material-icons notification-icon">notifications</span>
-          <div className="user-info">
+          <div className="user-info" style={{ textAlign: 'right' }}>
             <div className="welcome">Welcome: <span className="username">{userName}</span></div>
             <div className="account-id">{userId}</div>
           </div>
           <span className="material-icons" style={{ color: '#7c3aed', fontSize: '32px' }}>account_circle</span>
-          <button 
-            className="hamburger-btn" 
-            aria-label="Open navigation" 
-            tabIndex={0}
-            onClick={toggleNav}
-          >
+          <button className="hamburger-btn" aria-label="Open navigation" tabIndex={0}>
             <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
               <rect y="6" width="32" height="4" rx="2" fill="#582a80"/>
               <rect y="14" width="32" height="4" rx="2" fill="#582a80"/>
