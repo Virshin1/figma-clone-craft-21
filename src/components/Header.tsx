@@ -7,14 +7,14 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({ 
-  userName = "Abhinav mishra", 
+  userName = "Abhinav Mishra", 
   userId = "EPWR000019 (hpay)" 
 }) => {
   return (
     <header className="header">
       <div className="header-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <div className="logo-container">
-          <img className="logo" src="LOGO_Hpay.png" alt="HPay Logo" />
+          <img className="logo" src="LOGO.jpg" alt="HPay Logo" />
         </div>
         <nav className="main-nav" style={{ flex: 1 }}>
           <ul className="nav-list" id="main-nav-list">
