@@ -14,7 +14,7 @@ export const Header: React.FC<HeaderProps> = ({
     <header className="header">
       <div className="header-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <div className="logo-container">
-          <img className="logo" src="LOGO.jpg" alt="HPay Logo" />
+          <img className="logo" src="/LOGO.jpg" alt="HPay Logo" />
         </div>
         <nav className="main-nav" style={{ flex: 1 }}>
           <ul className="nav-list" id="main-nav-list">

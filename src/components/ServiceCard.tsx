@@ -1,6 +1,7 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Plus } from 'lucide-react';
+import { ServiceDropdown } from './ServiceDropdown';
 
 interface ServiceCardProps {
   title: string;
@@ -9,6 +10,7 @@ interface ServiceCardProps {
   onClick?: () => void;
   className?: string;
   showPlusButton?: boolean;
+  onServiceAdd?: (service: { id: string; title: string; icon: string; category: string }) => void;
 }
 
 export const ServiceCard: React.FC<ServiceCardProps> = ({
@@ -17,8 +19,31 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
   href,
   onClick,
   className = "",
-  showPlusButton = false
+  showPlusButton = false,
+  onServiceAdd
 }) => {
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [dropdownPosition, setDropdownPosition] = useState({ x: 0, y: 0 });
+
+  const handlePlusClick = (event: React.MouseEvent) => {
+    event.preventDefault();
+    event.stopPropagation();
+    
+    const rect = event.currentTarget.getBoundingClientRect();
+    setDropdownPosition({
+      x: rect.right + 10,
+      y: rect.top
+    });
+    setShowDropdown(true);
+  };
+
+  const handleServiceSelect = (service: { id: string; title: string; icon: string; category: string }) => {
+    if (onServiceAdd) {
+      onServiceAdd(service);
+    }
+    console.log('Service selected:', service);
+  };
+
   const cardContent = (
     <>
       <div className="bg-white shadow-[0px_2px_2px_rgba(0,0,0,0.14)] absolute z-0 flex min-h-[132px] max-w-full w-[225px] items-stretch h-[132px] rounded-[20px] right-0 bottom-0" />
@@ -35,12 +60,20 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
       
       {showPlusButton && (
         <button 
-          className="absolute -top-2 -right-2 bg-white text-[rgba(51,102,153,1)] w-8 h-8 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-110"
+          onClick={handlePlusClick}
+          className="absolute -top-2 -right-2 bg-white text-[rgba(51,102,153,1)] w-8 h-8 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-110 z-10"
           aria-label="Add service"
         >
           <Plus size={16} className="stroke-2" />
         </button>
       )}
+
+      <ServiceDropdown
+        isOpen={showDropdown}
+        onClose={() => setShowDropdown(false)}
+        onSelect={handleServiceSelect}
+        position={dropdownPosition}
+      />
     </>
   );
 
