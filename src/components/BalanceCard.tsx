@@ -41,7 +41,7 @@ export const BalanceCard: React.FC<BalanceCardProps> = ({
           {formatBalance(currentBalance)}
         </div>
         <div className="text-center ml-2.5 mt-[33px]">
-          Trade Balance
+          Current Balance
         </div>
         <div className="text-[44px] mt-[22px]">
           {formatBalance(secondaryBalance)}
