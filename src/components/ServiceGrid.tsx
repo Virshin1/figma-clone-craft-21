@@ -70,7 +70,7 @@ export const ServiceGrid: React.FC<ServiceGridProps> = ({
           {row.map((service, serviceIndex) => {
             const globalIndex = rowIndex * columns + serviceIndex;
             return (
-              <div key={service.id} className="relative">
+              <div key={`${service.id}-${globalIndex}`} className="relative">
                 <ServiceCard
                   title={service.title}
                   icon={service.icon}
