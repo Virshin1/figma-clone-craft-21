@@ -21,18 +21,21 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
   const cardContent = (
     <>
       <div className="bg-white shadow-[0px_2px_2px_rgba(0,0,0,0.14)] absolute z-0 flex min-h-[132px] max-w-full w-[225px] items-stretch h-[132px] rounded-[20px] right-0 bottom-0" />
-      <div className="z-10 flex min-h-[104px] w-full max-w-[207px] flex-col items-stretch justify-center">
+      <div className="z-10 flex min-h-[104px] w-full max-w-[207px] flex-col items-center justify-center p-4">
         {isCustomService && icon ? (
-          <div className="flex items-center justify-center h-full p-4">
+          <>
             <div 
               dangerouslySetInnerHTML={{ __html: icon }}
-              className="w-16 h-16 flex items-center justify-center"
+              className="w-12 h-12 mb-3 flex items-center justify-center [&>svg]:w-full [&>svg]:h-full [&>svg]:max-w-12 [&>svg]:max-h-12"
             />
-          </div>
+            <div className="text-center text-gray-700 text-sm font-medium leading-tight">
+              {title}
+            </div>
+          </>
         ) : !isCustomService ? (
           <>
-            <div className="text-4xl text-gray-400 self-center mb-2">+</div>
-            <div className="self-stretch text-center text-gray-500 text-sm">
+            <div className="text-4xl text-gray-400 mb-2">+</div>
+            <div className="text-center text-gray-500 text-sm">
               {title}
             </div>
           </>
