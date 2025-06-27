@@ -39,6 +39,9 @@ export const ServiceGrid: React.FC<ServiceGridProps> = ({
   };
 
   const handleAddService = (serviceIndex: number, newService: any) => {
+    console.log('Adding service:', newService);
+    console.log('Service icon URL:', newService.icon);
+    
     const updatedServices = [...services];
     updatedServices[serviceIndex] = {
       id: newService.id,
@@ -47,6 +50,8 @@ export const ServiceGrid: React.FC<ServiceGridProps> = ({
       isCustom: true,
       onClick: () => handleServiceClick(newService.id)
     };
+    
+    console.log('Updated service:', updatedServices[serviceIndex]);
     setServices(updatedServices);
     setOpenDropdownIndex(null);
   };
@@ -86,9 +91,8 @@ export const ServiceGrid: React.FC<ServiceGridProps> = ({
             return (
               <div key={`${service.id}-${globalIndex}`} className="relative">
                 <ServiceCard
-                  title={service.isCustom ? '' : service.title}
+                  title={service.title}
                   icon={service.icon}
-                  href={service.href}
                   onClick={service.onClick || (() => handleServiceClick(service.id))}
                   showPlusButton={false}
                   isCustomService={service.isCustom}
