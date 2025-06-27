@@ -24,16 +24,9 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
       <div className="z-10 flex min-h-[104px] w-full max-w-[207px] flex-col items-stretch justify-center">
         {isCustomService && icon ? (
           <div className="flex items-center justify-center h-full p-4">
-            <img
-              src={icon}
-              alt={`${title} icon`}
-              className="w-20 h-20 object-cover rounded-lg shadow-sm"
-              onError={(e) => {
-                console.log(`Failed to load service card image: ${icon}`);
-                console.log('Service title:', title);
-                // Show a fallback icon or placeholder
-                e.currentTarget.src = 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=80&h=80&fit=crop&crop=center';
-              }}
+            <div 
+              dangerouslySetInnerHTML={{ __html: icon }}
+              className="w-16 h-16 flex items-center justify-center"
             />
           </div>
         ) : !isCustomService ? (
