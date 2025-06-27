@@ -9,6 +9,7 @@ interface Service {
   icon: string;
   href?: string;
   onClick?: () => void;
+  isCustom?: boolean;
 }
 
 interface ServiceGridProps {
@@ -18,15 +19,15 @@ interface ServiceGridProps {
 
 export const ServiceGrid: React.FC<ServiceGridProps> = ({
   services: initialServices = [
-    { id: '1', title: 'PPI WALLET GOLD', icon: 'https://cdn.builder.io/api/v1/image/assets/a2e53047b25843fd94cfdce41548669c/d9d164360b1fbc4d980f7c15fcadd75539949710?placeholderIfAbsent=true' },
-    { id: '2', title: 'PPI WALLET GOLD', icon: 'https://cdn.builder.io/api/v1/image/assets/a2e53047b25843fd94cfdce41548669c/d9d164360b1fbc4d980f7c15fcadd75539949710?placeholderIfAbsent=true' },
-    { id: '3', title: 'PPI WALLET GOLD', icon: 'https://cdn.builder.io/api/v1/image/assets/a2e53047b25843fd94cfdce41548669c/d9d164360b1fbc4d980f7c15fcadd75539949710?placeholderIfAbsent=true' },
-    { id: '4', title: 'PPI WALLET GOLD', icon: 'https://cdn.builder.io/api/v1/image/assets/a2e53047b25843fd94cfdce41548669c/d9d164360b1fbc4d980f7c15fcadd75539949710?placeholderIfAbsent=true' },
-    { id: '5', title: 'PPI WALLET GOLD', icon: 'https://cdn.builder.io/api/v1/image/assets/a2e53047b25843fd94cfdce41548669c/d9d164360b1fbc4d980f7c15fcadd75539949710?placeholderIfAbsent=true' },
-    { id: '6', title: 'PPI WALLET GOLD', icon: 'https://cdn.builder.io/api/v1/image/assets/a2e53047b25843fd94cfdce41548669c/d9d164360b1fbc4d980f7c15fcadd75539949710?placeholderIfAbsent=true' },
-    { id: '7', title: 'PPI WALLET GOLD', icon: 'https://cdn.builder.io/api/v1/image/assets/a2e53047b25843fd94cfdce41548669c/d9d164360b1fbc4d980f7c15fcadd75539949710?placeholderIfAbsent=true' },
-    { id: '8', title: 'PPI WALLET GOLD', icon: 'https://cdn.builder.io/api/v1/image/assets/a2e53047b25843fd94cfdce41548669c/d9d164360b1fbc4d980f7c15fcadd75539949710?placeholderIfAbsent=true' },
-    { id: '9', title: 'PPI WALLET GOLD', icon: 'https://cdn.builder.io/api/v1/image/assets/a2e53047b25843fd94cfdce41548669c/d9d164360b1fbc4d980f7c15fcadd75539949710?placeholderIfAbsent=true' }
+    { id: '1', title: 'Add Service', icon: '', isCustom: false },
+    { id: '2', title: 'Add Service', icon: '', isCustom: false },
+    { id: '3', title: 'Add Service', icon: '', isCustom: false },
+    { id: '4', title: 'Add Service', icon: '', isCustom: false },
+    { id: '5', title: 'Add Service', icon: '', isCustom: false },
+    { id: '6', title: 'Add Service', icon: '', isCustom: false },
+    { id: '7', title: 'Add Service', icon: '', isCustom: false },
+    { id: '8', title: 'Add Service', icon: '', isCustom: false },
+    { id: '9', title: 'Add Service', icon: '', isCustom: false }
   ],
   columns = 3
 }) => {
@@ -43,7 +44,20 @@ export const ServiceGrid: React.FC<ServiceGridProps> = ({
       id: newService.id,
       title: newService.title,
       icon: newService.icon,
+      isCustom: true,
       onClick: () => handleServiceClick(newService.id)
+    };
+    setServices(updatedServices);
+    setOpenDropdownIndex(null);
+  };
+
+  const handleRemoveService = (serviceIndex: number) => {
+    const updatedServices = [...services];
+    updatedServices[serviceIndex] = {
+      id: `${serviceIndex + 1}`,
+      title: 'Add Service',
+      icon: '',
+      isCustom: false
     };
     setServices(updatedServices);
     setOpenDropdownIndex(null);
@@ -72,16 +86,19 @@ export const ServiceGrid: React.FC<ServiceGridProps> = ({
             return (
               <div key={`${service.id}-${globalIndex}`} className="relative">
                 <ServiceCard
-                  title={service.title}
+                  title={service.isCustom ? '' : service.title}
                   icon={service.icon}
                   href={service.href}
                   onClick={service.onClick || (() => handleServiceClick(service.id))}
                   showPlusButton={false}
+                  isCustomService={service.isCustom}
                 />
                 <AddServiceDropdown
                   onServiceAdd={(newService) => handleAddService(globalIndex, newService)}
+                  onServiceRemove={() => handleRemoveService(globalIndex)}
                   isOpen={openDropdownIndex === globalIndex}
                   onToggle={() => handleDropdownToggle(globalIndex)}
+                  hasCustomService={service.isCustom || false}
                 />
               </div>
             );

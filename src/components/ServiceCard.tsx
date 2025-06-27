@@ -8,6 +8,7 @@ interface ServiceCardProps {
   onClick?: () => void;
   className?: string;
   showPlusButton?: boolean;
+  isCustomService?: boolean;
 }
 
 export const ServiceCard: React.FC<ServiceCardProps> = ({
@@ -16,20 +17,27 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
   href,
   onClick,
   className = "",
-  showPlusButton = false
+  showPlusButton = false,
+  isCustomService = false
 }) => {
   const cardContent = (
     <>
       <div className="bg-white shadow-[0px_2px_2px_rgba(0,0,0,0.14)] absolute z-0 flex min-h-[132px] max-w-full w-[225px] items-stretch h-[132px] rounded-[20px] right-0 bottom-0" />
-      <div className="z-0 flex min-h-[104px] w-full max-w-[207px] flex-col items-stretch">
-        <img
-          src={icon}
-          alt={`${title} icon`}
-          className="aspect-[1.05] object-contain w-[63px] self-center"
-        />
-        <div className="self-stretch flex-1 shrink basis-[0%] w-full gap-2.5 mt-4">
-          {title}
-        </div>
+      <div className="z-0 flex min-h-[104px] w-full max-w-[207px] flex-col items-stretch justify-center">
+        {isCustomService && icon ? (
+          <img
+            src={icon}
+            alt={`${title} icon`}
+            className="aspect-square object-contain w-[80px] h-[80px] self-center"
+          />
+        ) : !isCustomService ? (
+          <>
+            <div className="text-4xl text-gray-400 self-center mb-2">+</div>
+            <div className="self-stretch text-center text-gray-500">
+              {title}
+            </div>
+          </>
+        ) : null}
       </div>
     </>
   );
@@ -53,7 +61,7 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
     <button
       onClick={onClick}
       className={`${baseClasses} cursor-pointer`}
-      aria-label={`Access ${title} service`}
+      aria-label={isCustomService ? `Access ${title} service` : 'Add new service'}
     >
       {cardContent}
     </button>

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Plus, X } from 'lucide-react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator, DropdownMenuLabel } from './ui/dropdown-menu';
@@ -12,14 +11,18 @@ interface ServiceOption {
 
 interface AddServiceDropdownProps {
   onServiceAdd: (service: ServiceOption) => void;
+  onServiceRemove: () => void;
   isOpen: boolean;
   onToggle: () => void;
+  hasCustomService: boolean;
 }
 
 export const AddServiceDropdown: React.FC<AddServiceDropdownProps> = ({
   onServiceAdd,
+  onServiceRemove,
   isOpen,
-  onToggle
+  onToggle,
+  hasCustomService
 }) => {
   const serviceOptions: ServiceOption[] = [
     // Payments
@@ -50,7 +53,12 @@ export const AddServiceDropdown: React.FC<AddServiceDropdownProps> = ({
 
   const handleServiceSelect = (service: ServiceOption) => {
     onServiceAdd(service);
-    onToggle(); // Close the dropdown after selection
+    onToggle();
+  };
+
+  const handleRemoveClick = () => {
+    onServiceRemove();
+    onToggle();
   };
 
   const groupedServices = serviceOptions.reduce((acc, service) => {
@@ -66,9 +74,9 @@ export const AddServiceDropdown: React.FC<AddServiceDropdownProps> = ({
       <DropdownMenuTrigger asChild>
         <button 
           className="absolute -top-2 -right-2 bg-white text-[rgba(51,102,153,1)] w-8 h-8 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-110 z-10"
-          aria-label="Add service"
+          aria-label={hasCustomService ? "Remove service" : "Add service"}
         >
-          {isOpen ? <X size={16} className="stroke-2" /> : <Plus size={16} className="stroke-2" />}
+          {hasCustomService ? <X size={16} className="stroke-2" /> : <Plus size={16} className="stroke-2" />}
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent 
@@ -76,30 +84,42 @@ export const AddServiceDropdown: React.FC<AddServiceDropdownProps> = ({
         align="end"
         side="bottom"
       >
-        {Object.entries(groupedServices).map(([category, services]) => (
-          <div key={category}>
-            <DropdownMenuLabel className="text-xs font-semibold text-gray-500 uppercase tracking-wide px-2 py-1">
-              {category}
-            </DropdownMenuLabel>
-            {services.map((service) => (
-              <DropdownMenuItem
-                key={service.id}
-                onClick={() => handleServiceSelect(service)}
-                className="flex items-center gap-3 px-3 py-2 cursor-pointer hover:bg-gray-50 transition-colors"
-              >
-                <img 
-                  src={service.icon} 
-                  alt={`${service.title} icon`}
-                  className="w-6 h-6 object-contain flex-shrink-0"
-                />
-                <span className="text-sm font-medium text-gray-700 truncate">
-                  {service.title}
-                </span>
-              </DropdownMenuItem>
+        {hasCustomService ? (
+          <DropdownMenuItem
+            onClick={handleRemoveClick}
+            className="flex items-center gap-3 px-3 py-2 cursor-pointer hover:bg-red-50 transition-colors text-red-600"
+          >
+            <X size={16} />
+            <span className="text-sm font-medium">Remove Service</span>
+          </DropdownMenuItem>
+        ) : (
+          <>
+            {Object.entries(groupedServices).map(([category, services]) => (
+              <div key={category}>
+                <DropdownMenuLabel className="text-xs font-semibold text-gray-500 uppercase tracking-wide px-2 py-1">
+                  {category}
+                </DropdownMenuLabel>
+                {services.map((service) => (
+                  <DropdownMenuItem
+                    key={service.id}
+                    onClick={() => handleServiceSelect(service)}
+                    className="flex items-center gap-3 px-3 py-2 cursor-pointer hover:bg-gray-50 transition-colors"
+                  >
+                    <img 
+                      src={service.icon} 
+                      alt={`${service.title} icon`}
+                      className="w-6 h-6 object-contain flex-shrink-0"
+                    />
+                    <span className="text-sm font-medium text-gray-700 truncate">
+                      {service.title}
+                    </span>
+                  </DropdownMenuItem>
+                ))}
+                <DropdownMenuSeparator />
+              </div>
             ))}
-            <DropdownMenuSeparator />
-          </div>
-        ))}
+          </>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );
