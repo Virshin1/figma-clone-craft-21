@@ -23,14 +23,16 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
       <div className="bg-white shadow-[0px_2px_2px_rgba(0,0,0,0.14)] absolute z-0 flex min-h-[132px] max-w-full w-[225px] items-stretch h-[132px] rounded-[20px] right-0 bottom-0" />
       <div className="z-10 flex min-h-[104px] w-full max-w-[207px] flex-col items-stretch justify-center">
         {isCustomService && icon ? (
-          <div className="flex items-center justify-center h-full">
+          <div className="flex items-center justify-center h-full p-4">
             <img
               src={icon}
               alt={`${title} icon`}
-              className="w-16 h-16 object-contain"
+              className="w-20 h-20 object-cover rounded-lg shadow-sm"
               onError={(e) => {
-                console.log(`Failed to load image: ${icon}`);
-                e.currentTarget.style.display = 'none';
+                console.log(`Failed to load service card image: ${icon}`);
+                console.log('Service title:', title);
+                // Show a fallback icon or placeholder
+                e.currentTarget.src = 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=80&h=80&fit=crop&crop=center';
               }}
             />
           </div>
