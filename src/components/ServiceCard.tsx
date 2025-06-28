@@ -18,8 +18,14 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
   className = "",
   isCustomService = false
 }) => {
-  // Debug logging
-  console.log('ServiceCard render:', { title, icon: icon.substring(0, 50) + '...', isCustomService });
+  // Enhanced debug logging
+  console.log('ServiceCard render:', { 
+    title, 
+    icon: icon.substring(0, 100), 
+    isCustomService,
+    iconLength: icon.length,
+    iconType: typeof icon 
+  });
 
   const cardContent = (
     <>
@@ -27,19 +33,23 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
       <div className="z-10 flex min-h-[104px] w-full max-w-[207px] flex-col items-center justify-center p-4">
         {isCustomService && icon ? (
           <>
-            <div 
-              dangerouslySetInnerHTML={{ __html: icon }}
-              className="w-12 h-12 mb-3 flex items-center justify-center [&>svg]:w-full [&>svg]:h-full [&>svg]:max-w-12 [&>svg]:max-h-12 [&>svg]:display-block"
-              style={{ 
-                minWidth: '48px', 
-                minHeight: '48px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}
-            />
+            <div className="w-12 h-12 mb-3 bg-gray-100 border border-gray-200 rounded flex items-center justify-center">
+              <div 
+                dangerouslySetInnerHTML={{ __html: icon }}
+                className="w-8 h-8 [&>svg]:w-full [&>svg]:h-full [&>svg]:block"
+                style={{ 
+                  width: '32px',
+                  height: '32px',
+                  display: 'block'
+                }}
+              />
+            </div>
             <div className="text-center text-gray-700 text-sm font-medium leading-tight">
               {title}
+            </div>
+            {/* Debug info */}
+            <div className="text-xs text-red-500 mt-1">
+              Icon: {icon ? 'Present' : 'Missing'}
             </div>
           </>
         ) : !isCustomService ? (
