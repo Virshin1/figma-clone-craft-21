@@ -23,7 +23,7 @@ const Index: React.FC = () => {
   ];
 
   return (
-    <div className="flex flex-col items-center py-[19px]">
+    <div className="flex flex-col items-center">
       <Header />
       
       <TickerBanner />
