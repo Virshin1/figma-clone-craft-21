@@ -45,8 +45,7 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
           </>
         ) : !isCustomService ? (
           <>
-            {/* Add service placeholder */}
-            <div className="text-4xl text-gray-400 mb-2">+</div>
+            {/* Add service text centered without plus sign */}
             <div className="text-center text-gray-500 text-sm font-medium">
               {title}
             </div>
