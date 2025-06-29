@@ -39,11 +39,14 @@ export const ServiceGrid: React.FC<ServiceGridProps> = ({
   };
 
   const handleAddService = (serviceIndex: number, newService: any) => {
-    console.log('Adding service:', newService);
-    console.log('Service icon URL:', newService.icon);
+    console.log('=== ServiceGrid Debug ===');
+    console.log('Adding service at index:', serviceIndex);
+    console.log('New service data:', newService);
+    console.log('Icon data received:', newService.icon);
+    console.log('Icon length:', newService.icon?.length || 0);
     
     const updatedServices = [...services];
-    updatedServices[serviceIndex] = {
+    const updatedService = {
       id: newService.id,
       title: newService.title,
       icon: newService.icon,
@@ -51,7 +54,11 @@ export const ServiceGrid: React.FC<ServiceGridProps> = ({
       onClick: () => handleServiceClick(newService.id)
     };
     
-    console.log('Updated service:', updatedServices[serviceIndex]);
+    updatedServices[serviceIndex] = updatedService;
+    
+    console.log('Updated service object:', updatedService);
+    console.log('Services array after update:', updatedServices);
+    
     setServices(updatedServices);
     setOpenDropdownIndex(null);
   };
@@ -76,6 +83,16 @@ export const ServiceGrid: React.FC<ServiceGridProps> = ({
   for (let i = 0; i < services.length; i += columns) {
     rows.push(services.slice(i, i + columns));
   }
+
+  // Debug current services state
+  console.log('=== ServiceGrid Current State ===');
+  console.log('Services:', services.map(s => ({ 
+    id: s.id, 
+    title: s.title, 
+    isCustom: s.isCustom, 
+    hasIcon: !!s.icon,
+    iconLength: s.icon?.length || 0
+  })));
 
   return (
     <section className="flex min-h-[671px] w-full flex-col items-stretch text-sm text-[#336699] font-normal text-center justify-center pb-2.5 max-md:max-w-full max-md:mt-9">

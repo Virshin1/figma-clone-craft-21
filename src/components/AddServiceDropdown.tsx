@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Plus, X } from 'lucide-react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator, DropdownMenuLabel } from './ui/dropdown-menu';
@@ -118,8 +117,14 @@ export const AddServiceDropdown: React.FC<AddServiceDropdownProps> = ({
   ];
 
   const handleServiceSelect = (service: ServiceOption) => {
-    console.log('Service selected:', service);
-    console.log('Icon SVG:', service.icon);
+    console.log('=== AddServiceDropdown Debug ===');
+    console.log('Selected service:', service.title);
+    console.log('Service ID:', service.id);
+    console.log('Icon being passed:', service.icon);
+    console.log('Icon length:', service.icon.length);
+    console.log('Contains <svg>:', service.icon.includes('<svg>'));
+    console.log('Full service object:', JSON.stringify(service, null, 2));
+    
     onServiceAdd(service);
     onToggle();
   };

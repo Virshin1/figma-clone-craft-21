@@ -18,40 +18,33 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
   className = "",
   isCustomService = false
 }) => {
-  // Enhanced debug logging
-  console.log('ServiceCard render:', { 
-    title, 
-    icon: icon.substring(0, 100), 
-    isCustomService,
-    iconLength: icon.length,
-    iconType: typeof icon 
-  });
+  // Comprehensive debug logging
+  console.log('=== ServiceCard Debug ===');
+  console.log('Title:', title);
+  console.log('IsCustomService:', isCustomService);
+  console.log('Icon exists:', !!icon);
+  console.log('Icon length:', icon?.length || 0);
+  console.log('Icon first 200 chars:', icon?.substring(0, 200));
+  console.log('Icon contains <svg>:', icon?.includes('<svg>'));
+  console.log('Icon contains viewBox:', icon?.includes('viewBox'));
+  console.log('Raw icon data:', icon);
 
-  // Function to create SVG element
-  const createSVGElement = (svgString: string) => {
-    if (!svgString) return null;
-    
+  // Test SVG parsing
+  if (icon && isCustomService) {
     try {
-      // Create a div to parse the SVG string
       const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = svgString;
+      tempDiv.innerHTML = icon;
       const svgElement = tempDiv.querySelector('svg');
-      
+      console.log('SVG parsing successful:', !!svgElement);
       if (svgElement) {
-        // Ensure SVG has proper attributes
-        svgElement.setAttribute('width', '32');
-        svgElement.setAttribute('height', '32');
-        svgElement.style.display = 'block';
-        svgElement.style.maxWidth = '32px';
-        svgElement.style.maxHeight = '32px';
-        return svgElement.outerHTML;
+        console.log('SVG tag name:', svgElement.tagName);
+        console.log('SVG attributes:', Array.from(svgElement.attributes).map(attr => `${attr.name}="${attr.value}"`));
+        console.log('SVG innerHTML:', svgElement.innerHTML);
       }
     } catch (error) {
-      console.error('Error parsing SVG:', error);
+      console.error('SVG parsing error:', error);
     }
-    
-    return svgString; // fallback to original
-  };
+  }
 
   const cardContent = (
     <>
@@ -59,26 +52,38 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
       <div className="z-10 flex min-h-[104px] w-full max-w-[207px] flex-col items-center justify-center p-4">
         {isCustomService && icon ? (
           <>
-            <div className="w-12 h-12 mb-3 bg-blue-50 border-2 border-blue-200 rounded-lg flex items-center justify-center overflow-hidden">
+            <div className="w-12 h-12 mb-3 bg-blue-50 border-2 border-blue-200 rounded-lg flex items-center justify-center relative">
+              {/* Raw SVG attempt */}
               <div 
-                dangerouslySetInnerHTML={{ __html: createSVGElement(icon) }}
-                className="flex items-center justify-center w-8 h-8"
+                dangerouslySetInnerHTML={{ __html: icon }}
+                className="w-8 h-8 flex items-center justify-center"
                 style={{ 
                   width: '32px',
                   height: '32px',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center',
-                  color: 'inherit'
+                  justifyContent: 'center'
                 }}
               />
+              
+              {/* Fallback indicator if SVG doesn't render */}
+              <div className="absolute inset-0 flex items-center justify-center text-xs text-red-500 pointer-events-none">
+                {!icon.includes('<svg') ? '❌' : ''}
+              </div>
             </div>
+            
             <div className="text-center text-gray-700 text-sm font-medium leading-tight">
               {title}
             </div>
-            {/* Debug info - remove this later */}
-            <div className="text-xs text-green-600 mt-1 bg-green-50 px-2 py-1 rounded">
-              SVG: {icon.includes('<svg') ? 'Valid' : 'Invalid'} | Length: {icon.length}
+            
+            {/* Enhanced debug info */}
+            <div className="text-xs text-blue-600 mt-1 bg-blue-50 px-2 py-1 rounded border">
+              <div>SVG: {icon.includes('<svg') ? '✅ Valid' : '❌ Invalid'}</div>
+              <div>Length: {icon.length}</div>
+              <div>Type: {typeof icon}</div>
+              <div className="font-mono text-[10px] mt-1 max-w-[150px] truncate">
+                {icon.substring(0, 50)}...
+              </div>
             </div>
           </>
         ) : !isCustomService ? (
@@ -88,7 +93,11 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
               {title}
             </div>
           </>
-        ) : null}
+        ) : (
+          <div className="text-xs text-red-500">
+            Custom service but no icon data
+          </div>
+        )}
       </div>
     </>
   );
