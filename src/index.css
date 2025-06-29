@@ -113,14 +113,13 @@
 .header {
   background: rgba(172, 226, 241, 0.65);
   box-shadow: 0 1px 4px rgba(56,196,231,0.08), 0 0.5px 0 rgba(56,196,231,0.10);
-  padding: 0;
+  padding: 0.625rem 0;
   backdrop-filter: blur(0.75rem);
   -webkit-backdrop-filter: blur(0.75rem);
   border-bottom: 1px solid rgba(56, 196, 231, 0.10);
   position: sticky;
   top: 0;
   z-index: 1000;
-  margin: 0;
 }
 
 .header-container {
@@ -128,7 +127,7 @@
   align-items: center;
   justify-content: space-between;
   margin: 0 auto;
-  padding: 0.625rem 1.5rem;
+  padding: 0 1.5rem;
   width: 100%;
   max-width: 100%;
   gap: 1rem;
